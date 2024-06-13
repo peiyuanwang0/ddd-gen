@@ -45,13 +45,13 @@ import { Response } from 'express';
 @UsePipes(new ValidationPipe({ exceptionFactory: TMFStandardException.createWith }))
 @UseInterceptors(RequestLoggingInterceptor)
 @ApiExcludeController()
-@Controller('" | append $moduleName | append "Management/v1')
-export class " | append (UpperCase  $moduleName) | append "ManagementController {
+@Controller('" | append $moduleName | append "/v1')
+export class " | append (UpperCase  $moduleName) | append "Controller {
     constructor(@Inject(InjectionToken." | append $serviceNameLow | append ") private " | append $serviceNameLow | append ": " | append $serviceName |append ") {}
 
     @Get(':id')
     findOne(@Param('id') id: string) {
-        return this." | append $serviceNameLow | append ".findOne(+id);
+        return this." | append $serviceNameLow | append ".findOne(id);
     }
 }  
     " | str join ''
@@ -108,7 +108,7 @@ export class " | append $serviceNameUpper | append " implements " | append $serv
     }
 
     async findOne(id: string): Promise<any | null> {
-        return this." | append $serviceNameLowDao | append ".findOne(+id);
+        return this." | append $serviceNameLowDao | append ".findOne(id);
     }
 }" | str join ''
 
@@ -225,7 +225,7 @@ import { " | append $serviceNameUpperDao | append " } from './infrastructure/" |
             useClass: " | append $serviceNameUpperDao | append ",
         },
         {
-            provide: InjectionToken." | append $serviceNameLowDao | append ",
+            provide: InjectionToken." | append $serviceNameLow | append ",
             useClass: " | append $serviceNameUpper | append ",
         },
     ],
